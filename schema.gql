@@ -4,7 +4,7 @@
 
 """post"""
 type Post {
-  _id: ID!
+  id: ID!
   title: String!
   authorId: String!
   postCategory: String!
@@ -15,13 +15,18 @@ type Post {
 
 type Query {
   posts: [Post!]!
+  post(findPostInput: PostFindDto!): Post!
+}
+
+input PostFindDto {
+  id: String!
 }
 
 type Mutation {
-  createPost(createPostInput: PostDto!): Post!
+  createPost(createPostInput: PostCreateDto!): Post!
 }
 
-input PostDto {
+input PostCreateDto {
   title: String!
   authorId: String!
   postCategory: String!

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { PostCreateDto } from './dto';
+import { PostCreateDto, PostFindDto } from './dto';
 import { Post, PostDocument } from './schema';
 
 @Injectable()
@@ -18,5 +18,9 @@ export class PostService {
 
     async findAll(): Promise<Post[]> {
         return await this.postModel.find();
+    }
+
+    async findOne(dto: PostFindDto): Promise<Post> {
+        return await this.postModel.findById(dto.id);
     }
 }
