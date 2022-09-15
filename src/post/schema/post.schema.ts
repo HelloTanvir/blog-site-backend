@@ -9,7 +9,7 @@ export type PostDocument = Post & Document;
 export class Post {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Field((type) => ID)
-    id: string;
+    _id: string;
 
     @Field()
     @Prop({ required: [true, 'Post title is required'] })

@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""post"""
+type Post {
+  _id: ID!
+  title: String!
+  authorId: String!
+  postCategory: String!
+  imageUrl: String
+  imageKey: String
+  body: String!
+}
+
+type Query {
+  posts: [Post!]!
+}
