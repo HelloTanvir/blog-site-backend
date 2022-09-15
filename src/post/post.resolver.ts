@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PostDto } from './dto';
+import { PostCreateDto } from './dto';
 import { PostService } from './post.service';
 import { Post } from './schema';
 
@@ -9,7 +9,7 @@ export class PostResolver {
     constructor(private postService: PostService) {}
 
     @Mutation((returns) => Post)
-    createPost(@Args('createPostInput') dto: PostDto): Promise<Post> {
+    createPost(@Args('createPostInput') dto: PostCreateDto): Promise<Post> {
         return this.postService.create(dto);
     }
 

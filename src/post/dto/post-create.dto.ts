@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsAlpha, IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class PostDto {
+export class PostCreateDto {
     @Field()
     @IsNotEmpty()
     @IsAlpha()
