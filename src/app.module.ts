@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './mongoose-config';
 import { MongoExceptionFilter } from './utils';
+import { PostModule } from './post/post.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { MongoExceptionFilter } from './utils';
             driver: ApolloDriver,
             autoSchemaFile: 'schema.gql',
         }),
+        PostModule,
     ],
     providers: [
         {
