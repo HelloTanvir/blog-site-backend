@@ -11,6 +11,10 @@ type Post {
   imageUrl: String
   imageKey: String
   body: String!
+  caption: String
+  isTrending: Boolean
+  isFeatured: Boolean
+  isEditorPicked: Boolean
 }
 
 type Query {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
@@ -7,7 +8,6 @@ export type PostDocument = Post & Document;
 @ObjectType({ description: 'post' })
 @Schema({ timestamps: true })
 export class Post {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Field((type) => ID)
     id: string;
 
@@ -34,6 +34,22 @@ export class Post {
     @Field()
     @Prop({ required: [true, 'Post body is required'] })
     body: string;
+
+    @Field({ nullable: true })
+    @Prop()
+    caption?: string;
+
+    @Field((type) => Boolean, { nullable: true })
+    @Prop({ default: false })
+    isTrending?: boolean;
+
+    @Field((type) => Boolean, { nullable: true })
+    @Prop({ default: false })
+    isFeatured?: boolean;
+
+    @Field((type) => Boolean, { nullable: true })
+    @Prop({ default: false })
+    isEditorPicked?: boolean;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
