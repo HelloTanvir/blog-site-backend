@@ -16,3 +16,14 @@ type Post {
 type Query {
   posts: [Post!]!
 }
+
+type Mutation {
+  createPost(createPostInput: PostDto!): Post!
+}
+
+input PostDto {
+  title: String!
+  authorId: String!
+  postCategory: String!
+  body: String!
+}
