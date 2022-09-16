@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
-import { PostCreateDto, PostFindDto } from './dto';
+import { PostCreateDto } from './dto';
 import { Post, PostDocument } from './schema';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class PostService {
         return await this.postModel.find();
     }
 
-    async findOne(dto: PostFindDto): Promise<Post> {
-        return await this.postModel.findById(dto.id);
+    async findOne(postId: string): Promise<Post> {
+        return await this.postModel.findById(postId);
     }
 }
