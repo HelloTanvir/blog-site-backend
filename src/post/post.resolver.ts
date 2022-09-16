@@ -22,4 +22,9 @@ export class PostResolver {
     post(@Args({ name: 'id', type: () => ID }) postId: string): Promise<Post> {
         return this.postService.findOne(postId);
     }
+
+    @Mutation((returns) => Post)
+    deletePost(@Args({ name: 'id', type: () => ID }) postId: string): Promise<Post> {
+        return this.postService.delete(postId);
+    }
 }

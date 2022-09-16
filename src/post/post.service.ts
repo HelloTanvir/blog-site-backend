@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
@@ -42,5 +42,24 @@ export class PostService {
 
     async findOne(postId: string): Promise<Post> {
         return await this.postModel.findById(postId);
+    }
+
+    async delete(postId: string): Promise<Post> {
+        const post = await this.postModel.findById(postId);
+
+        if (!post) {
+            throw new ForbiddenException('invalid id');
+        }
+
+        // remove image if any
+        if (post.imagePublicIds.length > 0) {
+            for (const publicId of post.imagePublicIds) {
+                await this.cloudinaryService.deleteFile(publicId);
+            }
+        }
+
+        await post.remove();
+
+        return post;
     }
 }
