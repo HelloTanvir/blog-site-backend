@@ -8,8 +8,8 @@ type Post {
   title: String!
   authorId: String!
   postCategory: String!
-  imageUrl: String
-  imageKey: String
+  images: [String!]
+  imagePublicIds: [String!]
   body: String!
   caption: String
   isTrending: Boolean
@@ -35,4 +35,8 @@ input PostCreateDto {
   authorId: String!
   postCategory: String!
   body: String!
+  images: [Upload!]
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

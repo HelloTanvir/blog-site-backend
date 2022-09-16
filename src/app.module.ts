@@ -5,8 +5,9 @@ import { APP_PIPE } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './mongoose-config';
-import { MongoExceptionFilter } from './utils';
 import { PostModule } from './post/post.module';
+import { MongoExceptionFilter } from './utils';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { PostModule } from './post/post.module';
             autoSchemaFile: 'schema.gql',
         }),
         PostModule,
+        CloudinaryModule,
     ],
     providers: [
         {

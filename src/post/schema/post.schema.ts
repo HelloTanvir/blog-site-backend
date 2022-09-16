@@ -23,13 +23,13 @@ export class Post {
     @Prop({ required: [true, 'Post category is required'] })
     postCategory: string;
 
-    @Field({ nullable: true })
+    @Field((type) => [String], { nullable: true })
     @Prop()
-    imageUrl?: string;
+    images?: string[];
 
-    @Field({ nullable: true })
+    @Field((type) => [String], { nullable: true })
     @Prop()
-    imageKey?: string;
+    imagePublicIds?: string[];
 
     @Field()
     @Prop({ required: [true, 'Post body is required'] })
