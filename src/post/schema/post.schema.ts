@@ -29,7 +29,7 @@ export class Post {
 
     @Field((type) => [String], { nullable: true })
     @Prop()
-    imageKeys?: string[];
+    imagePublicIds?: string[];
 
     @Field()
     @Prop({ required: [true, 'Post body is required'] })

@@ -9,7 +9,7 @@ type Post {
   authorId: String!
   postCategory: String!
   images: [String!]
-  imageKeys: [String!]
+  imagePublicIds: [String!]
   body: String!
   caption: String
   isTrending: Boolean
@@ -27,12 +27,8 @@ input PostFindDto {
 }
 
 type Mutation {
-  uploadFile(file: Upload!): Boolean!
   createPost(createPostInput: PostCreateDto!): Post!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input PostCreateDto {
   title: String!
@@ -41,3 +37,6 @@ input PostCreateDto {
   body: String!
   images: [Upload!]
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
