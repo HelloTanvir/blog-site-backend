@@ -19,15 +19,12 @@ type Post {
 
 type Query {
   posts: [Post!]!
-  post(findPostInput: PostFindDto!): Post!
-}
-
-input PostFindDto {
-  id: String!
+  post(id: ID!): Post!
 }
 
 type Mutation {
   createPost(createPostInput: PostCreateDto!): Post!
+  deletePost(id: ID!): Post!
 }
 
 input PostCreateDto {
