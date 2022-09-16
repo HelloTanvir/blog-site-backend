@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UploadApiErrorResponse, UploadApiResponse, v2 as cloudinarySDK } from 'cloudinary';
+import {
+    DeleteApiResponse,
+    UploadApiErrorResponse,
+    UploadApiResponse,
+    // eslint-disable-next-line prettier/prettier
+    v2 as cloudinarySDK
+} from 'cloudinary';
 import { FileUpload } from 'graphql-upload';
 
 @Injectable()
@@ -17,6 +23,17 @@ export class CloudinaryService {
             });
 
             file.createReadStream().pipe(upload);
+        });
+    }
+
+    async deleteFile(filePublicId: string): Promise<DeleteApiResponse> {
+        const cloudinary = this.getCloudinary();
+
+        return new Promise((resolve, reject) => {
+            cloudinary.uploader.destroy(filePublicId, (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+            });
         });
     }
 
