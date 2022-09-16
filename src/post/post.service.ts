@@ -14,15 +14,20 @@ export class PostService {
 
     async create(dto: PostCreateDto): Promise<Post> {
         const images: string[] = [];
+        const imagePublicIds: string[] = [];
 
         for (const image of dto.images) {
             const uploaded_file = await this.cloudinaryService.uploadFile(image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
             });
             images.push(uploaded_file.secure_url);
+            imagePublicIds.push(uploaded_file.public_id);
         }
 
-        (dto.images as any) = images;
+        if (images.length > 0 && imagePublicIds.length > 0) {
+            (dto.images as any) = images;
+            (dto as any).imagePublicIds = imagePublicIds;
+        }
 
         const post = new this.postModel(dto);
 
