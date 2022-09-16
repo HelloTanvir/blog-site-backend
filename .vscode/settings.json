@@ -18,5 +18,5 @@
   "eslint.alwaysShowStatus": true,
   "emmet.triggerExpansionOnTab": true,
   "typescript.preferences.importModuleSpecifier": "relative",
-  "cSpell.words": ["nestjs"]
+  "cSpell.words": ["CLOUDINARY", "nestjs"]
 }
