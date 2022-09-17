@@ -12,7 +12,9 @@ export class Post {
     id: string;
 
     @Field()
-    @Prop({ required: [true, 'Post title is required'] })
+    @Prop({
+        required: [true, 'Post title is required'],
+    })
     title: string;
 
     @Field()
@@ -20,11 +22,18 @@ export class Post {
     authorId: string;
 
     @Field()
+    @Prop({ required: [true, 'Post author name is required'] })
+    authorName: string;
+
+    @Field()
     @Prop({ required: [true, 'Post category is required'] })
     postCategory: string;
 
     @Field((type) => String, { nullable: true })
-    @Prop()
+    @Prop({
+        default:
+            'https://preview.colorlib.com/theme/meranda/images/xbig_img_1.jpg.pagespeed.ic.K2N7KNYATl.webp',
+    })
     image: string;
 
     @Prop()

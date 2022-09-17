@@ -14,7 +14,7 @@ export class PostResolver {
     }
 
     @Query((returns) => [Post])
-    posts(@Args({ name: 'getPostInput', nullable: true }) dto: PostGetDto): Promise<Post[]> {
+    posts(@Args({ name: 'getPostInput' }) dto: PostGetDto): Promise<Post[]> {
         return this.postService.findAll(dto);
     }
 
