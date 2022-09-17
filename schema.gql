@@ -11,21 +11,21 @@ type Post {
   image: String
   body: String!
   caption: String
-  isTrending: Boolean
-  isFeatured: Boolean
-  isEditorPicked: Boolean
+  isTrending: Boolean!
+  isFeatured: Boolean!
+  isEditorPicked: Boolean!
   createdAt: String!
 }
 
 type Query {
-  posts(getPostInput: PostGetDto!): [Post!]!
+  posts(getPostInput: PostGetDto): [Post!]!
   post(id: ID!): Post!
 }
 
 input PostGetDto {
-  isTrending: Boolean
-  isFeatured: Boolean
-  isEditorPicked: Boolean
+  isTrending: Boolean = false
+  isFeatured: Boolean = false
+  isEditorPicked: Boolean = false
 }
 
 type Mutation {
@@ -40,9 +40,9 @@ input PostCreateDto {
   body: String!
   image: Upload
   caption: String
-  isTrending: Boolean
-  isFeatured: Boolean
-  isEditorPicked: Boolean
+  isTrending: Boolean = false
+  isFeatured: Boolean = false
+  isEditorPicked: Boolean = false
 }
 
 """The `Upload` scalar type represents a file upload."""

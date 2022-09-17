@@ -25,10 +25,10 @@ export class Post {
 
     @Field((type) => String, { nullable: true })
     @Prop()
-    image?: string;
+    image: string;
 
     @Prop()
-    imagePublicId?: string;
+    imagePublicId: string;
 
     @Field()
     @Prop({ required: [true, 'Post body is required'] })
@@ -36,19 +36,19 @@ export class Post {
 
     @Field({ nullable: true })
     @Prop()
-    caption?: string;
+    caption: string;
 
-    @Field((type) => Boolean, { nullable: true })
+    @Field((type) => Boolean, { defaultValue: false })
     @Prop({ default: false })
-    isTrending?: boolean;
+    isTrending: boolean;
 
-    @Field((type) => Boolean, { nullable: true })
+    @Field((type) => Boolean, { defaultValue: false })
     @Prop({ default: false })
-    isFeatured?: boolean;
+    isFeatured: boolean;
 
-    @Field((type) => Boolean, { nullable: true })
+    @Field((type) => Boolean, { defaultValue: false })
     @Prop({ default: false })
-    isEditorPicked?: boolean;
+    isEditorPicked: boolean;
 
     @Field()
     createdAt: string;

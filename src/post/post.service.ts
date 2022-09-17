@@ -16,6 +16,8 @@ export class PostService {
         let image = '';
         let imagePublicId = '';
 
+        console.log({ dto });
+
         if (dto.image) {
             const uploaded_file = await this.cloudinaryService.uploadFile(dto.image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
@@ -37,12 +39,16 @@ export class PostService {
     }
 
     async findAll(dto: PostGetDto): Promise<Post[]> {
+        const conditionArr = Object.keys(dto)
+            .map((key) => (dto[key] ? { [key]: dto[key] } : null))
+            .filter((item) => item);
+
+        if (conditionArr.length == 0) {
+            return await this.postModel.find();
+        }
+
         return await this.postModel.find({
-            $and: [
-                { isEditorPicked: dto.isEditorPicked },
-                { isFeatured: dto.isFeatured },
-                { isTrending: dto.isTrending },
-            ],
+            $and: conditionArr,
         });
     }
 
