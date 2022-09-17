@@ -25,8 +25,8 @@ export class PostCreateDto {
     body: string;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Field((type) => [GraphQLUpload], { nullable: true })
+    @Field((type) => GraphQLUpload, { nullable: true })
     @IsOptional()
     @IsNotEmpty()
-    images: FileUpload[];
+    image: FileUpload;
 }

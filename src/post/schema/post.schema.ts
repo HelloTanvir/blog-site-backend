@@ -23,13 +23,12 @@ export class Post {
     @Prop({ required: [true, 'Post category is required'] })
     postCategory: string;
 
-    @Field((type) => [String], { nullable: true })
+    @Field((type) => String, { nullable: true })
     @Prop()
-    images?: string[];
+    image?: string;
 
-    @Field((type) => [String], { nullable: true })
     @Prop()
-    imagePublicIds?: string[];
+    imagePublicId?: string;
 
     @Field()
     @Prop({ required: [true, 'Post body is required'] })
@@ -50,6 +49,9 @@ export class Post {
     @Field((type) => Boolean, { nullable: true })
     @Prop({ default: false })
     isEditorPicked?: boolean;
+
+    @Field()
+    createdAt: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

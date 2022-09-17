@@ -13,20 +13,20 @@ export class PostService {
     ) {}
 
     async create(dto: PostCreateDto): Promise<Post> {
-        const images: string[] = [];
-        const imagePublicIds: string[] = [];
+        let image = '';
+        let imagePublicId = '';
 
-        for (const image of dto.images) {
-            const uploaded_file = await this.cloudinaryService.uploadFile(image).catch(() => {
+        if (dto.image) {
+            const uploaded_file = await this.cloudinaryService.uploadFile(dto.image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
             });
-            images.push(uploaded_file.secure_url);
-            imagePublicIds.push(uploaded_file.public_id);
+            image = uploaded_file.secure_url;
+            imagePublicId = uploaded_file.public_id;
         }
 
-        if (images.length > 0 && imagePublicIds.length > 0) {
-            (dto.images as any) = images;
-            (dto as any).imagePublicIds = imagePublicIds;
+        if (image && imagePublicId) {
+            (dto.image as any) = image;
+            (dto as any).imagePublicId = imagePublicId;
         }
 
         const post = new this.postModel(dto);
@@ -52,10 +52,8 @@ export class PostService {
         }
 
         // remove image if any
-        if (post.imagePublicIds.length > 0) {
-            for (const publicId of post.imagePublicIds) {
-                await this.cloudinaryService.deleteFile(publicId);
-            }
+        if (post.imagePublicId) {
+            await this.cloudinaryService.deleteFile(post.imagePublicId);
         }
 
         await post.remove();
