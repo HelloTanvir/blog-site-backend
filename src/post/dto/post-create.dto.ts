@@ -1,32 +1,63 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, InputType } from '@nestjs/graphql';
-import { IsAlpha, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+    IsAlphanumeric,
+    IsBoolean,
+    IsNotEmpty,
+    IsOptional,
+    // eslint-disable-next-line prettier/prettier
+    IsString
+} from 'class-validator';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @InputType()
 export class PostCreateDto {
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     title: string;
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsAlphanumeric()
     authorId: string;
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     postCategory: string;
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     body: string;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Field((type) => [GraphQLUpload], { nullable: true })
+    @Field((type) => GraphQLUpload, { nullable: true })
     @IsOptional()
     @IsNotEmpty()
-    images: FileUpload[];
+    image: FileUpload;
+
+    @Field({ nullable: true })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    caption: string;
+
+    @Field((type) => Boolean, { defaultValue: false })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsBoolean()
+    isTrending: boolean;
+
+    @Field((type) => Boolean, { defaultValue: false })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsBoolean()
+    isFeatured: boolean;
+
+    @Field((type) => Boolean, { defaultValue: false })
+    @IsOptional()
+    @IsNotEmpty()
+    @IsBoolean()
+    isEditorPicked: boolean;
 }

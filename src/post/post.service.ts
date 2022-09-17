@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, InternalServerErrorException } from '@n
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
-import { PostCreateDto } from './dto';
+import { PostCreateDto, PostGetDto } from './dto';
 import { Post, PostDocument } from './schema';
 
 @Injectable()
@@ -13,20 +13,20 @@ export class PostService {
     ) {}
 
     async create(dto: PostCreateDto): Promise<Post> {
-        const images: string[] = [];
-        const imagePublicIds: string[] = [];
+        let image = '';
+        let imagePublicId = '';
 
-        for (const image of dto.images) {
-            const uploaded_file = await this.cloudinaryService.uploadFile(image).catch(() => {
+        if (dto.image) {
+            const uploaded_file = await this.cloudinaryService.uploadFile(dto.image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
             });
-            images.push(uploaded_file.secure_url);
-            imagePublicIds.push(uploaded_file.public_id);
+            image = uploaded_file.secure_url;
+            imagePublicId = uploaded_file.public_id;
         }
 
-        if (images.length > 0 && imagePublicIds.length > 0) {
-            (dto.images as any) = images;
-            (dto as any).imagePublicIds = imagePublicIds;
+        if (image && imagePublicId) {
+            (dto.image as any) = image;
+            (dto as any).imagePublicId = imagePublicId;
         }
 
         const post = new this.postModel(dto);
@@ -36,8 +36,18 @@ export class PostService {
         return post;
     }
 
-    async findAll(): Promise<Post[]> {
-        return await this.postModel.find();
+    async findAll(dto: PostGetDto): Promise<Post[]> {
+        const conditionArr = Object.keys(dto)
+            .map((key) => (dto[key] ? { [key]: dto[key] } : null))
+            .filter((item) => item);
+
+        if (conditionArr.length == 0) {
+            return await this.postModel.find();
+        }
+
+        return await this.postModel.find({
+            $and: conditionArr,
+        });
     }
 
     async findOne(postId: string): Promise<Post> {
@@ -52,10 +62,8 @@ export class PostService {
         }
 
         // remove image if any
-        if (post.imagePublicIds.length > 0) {
-            for (const publicId of post.imagePublicIds) {
-                await this.cloudinaryService.deleteFile(publicId);
-            }
+        if (post.imagePublicId) {
+            await this.cloudinaryService.deleteFile(post.imagePublicId);
         }
 
         await post.remove();
