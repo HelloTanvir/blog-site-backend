@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, InternalServerErrorException } from '@n
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
-import { PostCreateDto } from './dto';
+import { PostCreateDto, PostGetDto } from './dto';
 import { Post, PostDocument } from './schema';
 
 @Injectable()
@@ -36,8 +36,14 @@ export class PostService {
         return post;
     }
 
-    async findAll(): Promise<Post[]> {
-        return await this.postModel.find();
+    async findAll(dto: PostGetDto): Promise<Post[]> {
+        return await this.postModel.find({
+            $and: [
+                { isEditorPicked: dto.isEditorPicked },
+                { isFeatured: dto.isFeatured },
+                { isTrending: dto.isTrending },
+            ],
+        });
     }
 
     async findOne(postId: string): Promise<Post> {

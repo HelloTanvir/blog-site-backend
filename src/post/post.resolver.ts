@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PostCreateDto } from './dto';
+import { PostCreateDto, PostGetDto } from './dto';
 import { PostService } from './post.service';
 import { Post } from './schema';
 
@@ -14,8 +14,8 @@ export class PostResolver {
     }
 
     @Query((returns) => [Post])
-    posts(): Promise<Post[]> {
-        return this.postService.findAll();
+    posts(@Args('getPostInput') dto: PostGetDto): Promise<Post[]> {
+        return this.postService.findAll(dto);
     }
 
     @Query((returns) => Post)

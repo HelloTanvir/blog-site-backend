@@ -18,8 +18,14 @@ type Post {
 }
 
 type Query {
-  posts: [Post!]!
+  posts(getPostInput: PostGetDto!): [Post!]!
   post(id: ID!): Post!
+}
+
+input PostGetDto {
+  isTrending: Boolean
+  isFeatured: Boolean
+  isEditorPicked: Boolean
 }
 
 type Mutation {
@@ -33,6 +39,10 @@ input PostCreateDto {
   postCategory: String!
   body: String!
   image: Upload
+  caption: String
+  isTrending: Boolean
+  isFeatured: Boolean
+  isEditorPicked: Boolean
 }
 
 """The `Upload` scalar type represents a file upload."""
