@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, InputType } from '@nestjs/graphql';
-import { IsAlpha, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsAlpha, IsAlphanumeric, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @InputType()
@@ -12,7 +12,7 @@ export class PostCreateDto {
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsAlphanumeric()
     authorId: string;
 
     @Field()
@@ -22,7 +22,7 @@ export class PostCreateDto {
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     body: string;
 
     @Field((type) => GraphQLUpload, { nullable: true })
