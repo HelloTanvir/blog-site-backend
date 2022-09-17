@@ -8,6 +8,7 @@ import { MongooseConfigService } from './mongoose-config';
 import { PostModule } from './post/post.module';
 import { MongoExceptionFilter } from './utils';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
         }),
         PostModule,
         CloudinaryModule,
+        UserModule,
     ],
     providers: [
         {
