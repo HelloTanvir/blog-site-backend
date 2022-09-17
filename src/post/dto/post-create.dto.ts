@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, InputType } from '@nestjs/graphql';
 import {
-    IsAlpha,
     IsAlphanumeric,
     IsBoolean,
     IsNotEmpty,
@@ -15,7 +14,7 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 export class PostCreateDto {
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     title: string;
 
     @Field()
@@ -25,7 +24,7 @@ export class PostCreateDto {
 
     @Field()
     @IsNotEmpty()
-    @IsAlpha()
+    @IsString()
     postCategory: string;
 
     @Field()
