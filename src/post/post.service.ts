@@ -16,8 +16,6 @@ export class PostService {
         let image = '';
         let imagePublicId = '';
 
-        console.log({ dto });
-
         if (dto.image) {
             const uploaded_file = await this.cloudinaryService.uploadFile(dto.image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
