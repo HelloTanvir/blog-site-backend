@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, InputType } from '@nestjs/graphql';
 import { IsAlpha, IsNotEmpty, IsOptional } from 'class-validator';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
@@ -24,9 +25,20 @@ export class PostCreateDto {
     @IsAlpha()
     body: string;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Field((type) => GraphQLUpload, { nullable: true })
     @IsOptional()
     @IsNotEmpty()
-    image: FileUpload;
+    image?: FileUpload;
+
+    @Field({ nullable: true })
+    caption?: string;
+
+    @Field((type) => Boolean, { nullable: true })
+    isTrending?: boolean;
+
+    @Field((type) => Boolean, { nullable: true })
+    isFeatured?: boolean;
+
+    @Field((type) => Boolean, { nullable: true })
+    isEditorPicked?: boolean;
 }
