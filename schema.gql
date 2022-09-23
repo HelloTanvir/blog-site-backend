@@ -20,7 +20,6 @@ input LogoutDto {
 
 type Mutation {
   createPost(createPostInput: PostCreateDto!): Post!
-  createUser(createUserInput: CreateUserDto!): User!
   deletePost(id: ID!): Post!
   login(loginInput: LoginDto!): User!
   logout(logoutInput: LogoutDto!): String!
