@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserDto } from '../user/dto';
 import { User } from '../user/schema/user.schema';
 import { AuthService } from './auth.service';
@@ -29,7 +29,7 @@ export class AuthResolver {
 
     // get-me
     @Query(() => User, { name: 'get-me' })
-    getMe(@Args('id', { type: () => Int }) id: string): Promise<User> {
+    getMe(@Args('id', { type: () => ID }) id: string): Promise<User> {
         return this.authService.getMe(id);
     }
 
