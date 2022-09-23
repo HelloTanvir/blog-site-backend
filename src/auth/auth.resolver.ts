@@ -35,7 +35,7 @@ export class AuthResolver {
 
     // refresh-token
     @Mutation(() => User)
-    refreshToken(@Args('refreshTokenInput') dto: any): Promise<Tokens> {
-        return this.authService.refreshToken(dto);
+    refreshTokens(@Args('refreshTokensInput') dto: any): Promise<Tokens> {
+        return this.authService.refreshTokens(dto);
     }
 }
