@@ -28,7 +28,25 @@ export class AuthService {
     }
 
     async login(dto: LoginDto): Promise<Tokens> {
-        return this.userService.login(dto);
+        const user = await this.userService.findOneByEmail(dto.email);
+
+        if (!user) {
+            throw new ForbiddenException('invalid email or password');
+        }
+
+        // compare user password
+        const isPasswordMatch = await bcrypt.compare(dto.password, user.password);
+
+        if (!isPasswordMatch) {
+            throw new ForbiddenException('invalid email or password');
+        }
+
+        const tokens = await this.getTokens(user._id.toString());
+
+        // update refresh token in db
+        await this.updateRefreshToken(user._id.toString(), tokens.refresh_token);
+
+        return tokens;
     }
 
     async logout(dto: LogoutDto) {
