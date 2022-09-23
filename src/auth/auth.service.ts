@@ -2,9 +2,9 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from '../user/dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto';
-import { CreateAuthInput } from './dto/create-auth.input';
 import { LogoutDto } from './dto/logout.dto';
 import { Tokens } from './types';
 
@@ -16,7 +16,7 @@ export class AuthService {
         private readonly userService: UserService
     ) {}
 
-    async signup(dto: CreateAuthInput): Promise<Tokens> {
+    async signup(dto: CreateUserDto): Promise<Tokens> {
         const user = await this.userService.create(dto);
 
         const tokens = await this.getTokens(user._id.toString());
@@ -50,7 +50,10 @@ export class AuthService {
     }
 
     async logout(dto: LogoutDto) {
-        return this.userService.logout(dto);
+        // update refresh token to null in db
+        await this.updateRefreshToken(dto.userId, null);
+
+        return 'logged out';
     }
 
     async getMe(id: string) {
@@ -120,14 +123,5 @@ export class AuthService {
             access_token: at,
             refresh_token: rt,
         };
-    }
-
-    async validateUser(email: string, pass: string): Promise<any> {
-        const user = await this.userService.findOneByEmail(email);
-        if (user && user.password === pass) {
-            const { password, ...result } = user;
-            return result;
-        }
-        return null;
     }
 }
