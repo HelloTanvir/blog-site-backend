@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { MongoExceptionFilter } from './utils';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
         PostModule,
         CloudinaryModule,
         UserModule,
+        AuthModule,
     ],
     providers: [
         {

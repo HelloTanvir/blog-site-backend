@@ -18,9 +18,20 @@ type Post {
   createdAt: String!
 }
 
+"""user"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  image: String!
+}
+
 type Query {
   posts(getPostInput: PostGetDto!): [Post!]!
   post(id: ID!): Post!
+  user(id: ID!): User!
+  getMe(id: ID!): User!
 }
 
 input PostGetDto {
@@ -32,6 +43,13 @@ input PostGetDto {
 type Mutation {
   createPost(createPostInput: PostCreateDto!): Post!
   deletePost(id: ID!): Post!
+  createUser(createUserInput: CreateUserDto!): User!
+  updateUser(updateUserInput: UpdateUserDto!): User!
+  removeUser(id: ID!): User!
+  signup(signupInput: CreateUserDto!): User!
+  login(loginInput: LoginDto!): User!
+  logout(logoutInput: LogoutDto!): String!
+  refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
 }
 
 input PostCreateDto {
@@ -48,3 +66,32 @@ input PostCreateDto {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input CreateUserDto {
+  name: String!
+  email: String!
+  password: String!
+  image: Upload!
+}
+
+input UpdateUserDto {
+  id: String!
+  name: String
+  email: String
+  password: String
+  image: Upload
+}
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+input LogoutDto {
+  userId: ID!
+}
+
+input RefreshTokensDto {
+  userId: ID!
+  refreshToken: String!
+}

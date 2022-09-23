@@ -16,7 +16,7 @@ export class UserService {
         const user = await this.userModel.findOne({ email: dto.email });
 
         if (user) {
-            return user;
+            throw new ForbiddenException('user already exists');
         }
 
         if (dto.image) {
@@ -40,6 +40,10 @@ export class UserService {
 
     async findOne(id: string) {
         return await this.userModel.findById(id);
+    }
+
+    async findOneByEmail(email: string) {
+        return await this.userModel.findOne({ email });
     }
 
     async update(dto: UpdateUserDto) {

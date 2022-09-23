@@ -36,6 +36,9 @@ export class User {
 
     @Prop({ required: [true, 'User image public id is required'] })
     imagePublicId: string;
+
+    @Prop({ default: null })
+    refreshToken: string | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
