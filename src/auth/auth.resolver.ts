@@ -1,35 +1,40 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateUserDto } from '../user/dto';
 import { User } from '../user/schema/user.schema';
 import { AuthService } from './auth.service';
-import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { LoginDto, LogoutDto } from './dto';
 
 @Resolver(() => User)
 export class AuthResolver {
     constructor(private readonly authService: AuthService) {}
 
+    // signup
     @Mutation(() => User)
-    createAuth(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
-        return this.authService.create(createAuthInput);
+    signup(@Args('signupInput') dto: CreateUserDto): Promise<User> {
+        return this.authService.signup(dto);
     }
 
-    @Query(() => [User], { name: 'auth' })
-    findAll() {
-        return this.authService.findAll();
-    }
-
-    @Query(() => User, { name: 'auth' })
-    findOne(@Args('id', { type: () => Int }) id: number) {
-        return this.authService.findOne(id);
-    }
-
+    // login
     @Mutation(() => User)
-    updateAuth(@Args('updateAuthInput') updateAuthInput: UpdateAuthInput) {
-        return this.authService.update(updateAuthInput.id, updateAuthInput);
+    login(@Args('loginInput') dto: LoginDto): Promise<User> {
+        return this.authService.login(dto);
     }
 
+    // logout
+    @Mutation(() => String)
+    logout(@Args('logoutInput') dto: LogoutDto): Promise<string> {
+        return this.authService.logout(dto);
+    }
+
+    // get-me
+    @Query(() => User, { name: 'get-me' })
+    getMe(@Args('id', { type: () => Int }) id: string): Promise<User> {
+        return this.authService.getMe(id);
+    }
+
+    // refresh-token
     @Mutation(() => User)
-    removeAuth(@Args('id', { type: () => Int }) id: number) {
-        return this.authService.remove(id);
+    refreshToken(@Args('refreshTokenInput') dto: any): Promise<User> {
+        return this.authService.refreshToken(dto);
     }
 }
