@@ -16,7 +16,7 @@ export class UserService {
         const user = await this.userModel.findOne({ email: dto.email });
 
         if (user) {
-            return user;
+            throw new ForbiddenException('user already exists');
         }
 
         if (dto.image) {
