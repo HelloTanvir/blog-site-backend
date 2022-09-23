@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto';
 import { UserService } from '../user/user.service';
-import { LoginDto } from './dto';
+import { LoginDto, RefreshTokensDto } from './dto';
 import { LogoutDto } from './dto/logout.dto';
 import { Tokens } from './types';
 
@@ -60,16 +60,16 @@ export class AuthService {
         return await this.userService.findOne(id);
     }
 
-    async refreshTokens(userId: string, enteredRt: string): Promise<Tokens> {
+    async refreshTokens(dto: RefreshTokensDto): Promise<Tokens> {
         // find user with userId from db
-        const user = await this.userService.findOne(userId);
+        const user = await this.userService.findOne(dto.userId);
 
         if (!user || !user.refreshToken) {
             throw new ForbiddenException('invalid refresh token');
         }
 
         // compare refresh token
-        const isRtMatch = await bcrypt.compare(enteredRt, user.refreshToken);
+        const isRtMatch = await bcrypt.compare(dto.refreshToken, user.refreshToken);
 
         if (!isRtMatch) {
             throw new ForbiddenException('invalid refresh token');

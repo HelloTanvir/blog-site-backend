@@ -30,8 +30,8 @@ type User {
 type Query {
   posts(getPostInput: PostGetDto!): [Post!]!
   post(id: ID!): Post!
-  user(id: Int!): User!
-  auth(id: Int!): User!
+  user(id: ID!): User!
+  getMe(id: ID!): User!
 }
 
 input PostGetDto {
@@ -45,10 +45,11 @@ type Mutation {
   deletePost(id: ID!): Post!
   createUser(createUserInput: CreateUserDto!): User!
   updateUser(updateUserInput: UpdateUserDto!): User!
-  removeUser(id: Int!): User!
-  createAuth(createAuthInput: CreateAuthInput!): User!
-  updateAuth(updateAuthInput: UpdateAuthInput!): User!
-  removeAuth(id: Int!): User!
+  removeUser(id: ID!): User!
+  signup(signupInput: CreateUserDto!): User!
+  login(loginInput: LoginDto!): User!
+  logout(logoutInput: LogoutDto!): String!
+  refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
 }
 
 input PostCreateDto {
@@ -81,13 +82,16 @@ input UpdateUserDto {
   image: Upload
 }
 
-input CreateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input LoginDto {
+  email: String!
+  password: String!
 }
 
-input UpdateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input LogoutDto {
+  userId: ID!
+}
+
+input RefreshTokensDto {
+  userId: ID!
+  refreshToken: String!
 }

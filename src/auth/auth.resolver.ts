@@ -2,7 +2,7 @@ import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserDto } from '../user/dto';
 import { User } from '../user/schema/user.schema';
 import { AuthService } from './auth.service';
-import { LoginDto, LogoutDto } from './dto';
+import { LoginDto, LogoutDto, RefreshTokensDto } from './dto';
 import { Tokens } from './types';
 
 @Resolver(() => User)
@@ -28,14 +28,14 @@ export class AuthResolver {
     }
 
     // get-me
-    @Query(() => User, { name: 'get-me' })
+    @Query(() => User)
     getMe(@Args('id', { type: () => ID }) id: string): Promise<User> {
         return this.authService.getMe(id);
     }
 
     // refresh-token
     @Mutation(() => User)
-    refreshTokens(@Args('refreshTokensInput') dto: any): Promise<Tokens> {
+    refreshTokens(@Args('refreshTokensInput') dto: RefreshTokensDto): Promise<Tokens> {
         return this.authService.refreshTokens(dto);
     }
 }
