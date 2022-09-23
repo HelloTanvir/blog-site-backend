@@ -3,6 +3,7 @@ import { CreateUserDto } from '../user/dto';
 import { User } from '../user/schema/user.schema';
 import { AuthService } from './auth.service';
 import { LoginDto, LogoutDto } from './dto';
+import { Tokens } from './types';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -10,13 +11,13 @@ export class AuthResolver {
 
     // signup
     @Mutation(() => User)
-    signup(@Args('signupInput') dto: CreateUserDto): Promise<User> {
+    signup(@Args('signupInput') dto: CreateUserDto): Promise<Tokens> {
         return this.authService.signup(dto);
     }
 
     // login
     @Mutation(() => User)
-    login(@Args('loginInput') dto: LoginDto): Promise<User> {
+    login(@Args('loginInput') dto: LoginDto): Promise<Tokens> {
         return this.authService.login(dto);
     }
 
@@ -34,7 +35,7 @@ export class AuthResolver {
 
     // refresh-token
     @Mutation(() => User)
-    refreshToken(@Args('refreshTokenInput') dto: any): Promise<User> {
+    refreshToken(@Args('refreshTokenInput') dto: any): Promise<Tokens> {
         return this.authService.refreshToken(dto);
     }
 }
