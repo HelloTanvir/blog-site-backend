@@ -89,5 +89,4 @@ type User {
   image: String!
   isAdmin: Boolean!
   name: String!
-  password: String!
 }
