@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto';
 import { UserService } from '../user/user.service';
 import { LoginDto, RefreshTokensDto } from './dto';
-import { LogoutDto } from './dto/logout.dto';
 import { Tokens } from './types';
 
 @Injectable()
@@ -49,9 +48,9 @@ export class AuthService {
         return tokens;
     }
 
-    async logout(dto: LogoutDto) {
+    async logout(userId: string) {
         // update refresh token to null in db
-        await this.updateRefreshToken(dto.userId, null);
+        await this.updateRefreshToken(userId, null);
 
         return 'logged out';
     }
