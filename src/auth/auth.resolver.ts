@@ -4,7 +4,7 @@ import { GetCurrentUser, Public } from '../common/decorators';
 import { CreateUserDto } from '../user/dto';
 import { User } from '../user/schema/user.schema';
 import { AuthService } from './auth.service';
-import { LoginDto, LogoutDto, RefreshTokensDto } from './dto';
+import { LoginDto, RefreshTokensDto } from './dto';
 import { Tokens } from './types';
 
 @Resolver(() => User)
@@ -24,15 +24,8 @@ export class AuthResolver {
     }
 
     @Mutation(() => String)
-    logout(
-        @GetCurrentUser('userId') id: string,
-        @Args('logoutInput') dto: LogoutDto
-    ): Promise<string> {
-        if (id !== dto.userId) {
-            throw new UnauthorizedException('unauthorized');
-        }
-
-        return this.authService.logout(dto);
+    logout(@GetCurrentUser('userId') userId: string): Promise<string> {
+        return this.authService.logout(userId);
     }
 
     @Query(() => User)

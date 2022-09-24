@@ -14,15 +14,11 @@ input LoginDto {
   password: String!
 }
 
-input LogoutDto {
-  userId: ID!
-}
-
 type Mutation {
   createPost(createPostInput: PostCreateDto!): Post!
   deletePost(postId: ID!): Post!
   login(loginInput: LoginDto!): User!
-  logout(logoutInput: LogoutDto!): String!
+  logout: String!
   refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
   removeUser(userId: ID!): User!
   signup(signupInput: CreateUserDto!): User!
@@ -46,7 +42,6 @@ type Post {
 }
 
 input PostCreateDto {
-  authorId: String!
   body: String!
   caption: String
   image: Upload
@@ -94,5 +89,4 @@ type User {
   image: String!
   isAdmin: Boolean!
   name: String!
-  password: String!
 }

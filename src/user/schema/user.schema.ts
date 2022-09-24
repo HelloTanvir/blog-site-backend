@@ -27,7 +27,6 @@ export class User {
     })
     email: string;
 
-    @Field()
     @Prop({
         required: [true, 'User password is required'],
     })

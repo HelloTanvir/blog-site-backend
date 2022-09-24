@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, InputType } from '@nestjs/graphql';
 import {
-    IsAlphanumeric,
     IsBoolean,
     IsNotEmpty,
     IsOptional,
@@ -16,11 +15,6 @@ export class PostCreateDto {
     @IsNotEmpty()
     @IsString()
     title: string;
-
-    @Field()
-    @IsNotEmpty()
-    @IsAlphanumeric()
-    authorId: string;
 
     @Field()
     @IsNotEmpty()

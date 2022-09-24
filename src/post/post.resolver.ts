@@ -12,13 +12,14 @@ export class PostResolver {
     @Mutation(() => Post)
     createPost(
         @GetCurrentUser('isAdmin') isAdmin: boolean,
+        @GetCurrentUser('userId') userId: string,
         @Args('createPostInput') dto: PostCreateDto
     ): Promise<Post> {
         if (!isAdmin) {
             throw new UnauthorizedException('unauthorized');
         }
 
-        return this.postService.create(dto);
+        return this.postService.create(userId, dto);
     }
 
     @Public()

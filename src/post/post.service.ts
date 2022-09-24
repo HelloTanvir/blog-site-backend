@@ -12,7 +12,7 @@ export class PostService {
         private readonly cloudinaryService: CloudinaryService
     ) {}
 
-    async create(dto: PostCreateDto): Promise<Post> {
+    async create(userId: string, dto: PostCreateDto): Promise<Post> {
         let image = '';
         let imagePublicId = '';
 
@@ -29,7 +29,10 @@ export class PostService {
             (dto as any).imagePublicId = imagePublicId;
         }
 
-        const post = new this.postModel(dto);
+        const post = new this.postModel({
+            ...dto,
+            authorId: userId,
+        });
 
         await post.save();
 
