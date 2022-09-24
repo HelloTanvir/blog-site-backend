@@ -2,84 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""post"""
-type Post {
-  id: ID!
-  title: String!
-  authorId: String!
-  authorName: String!
-  postCategory: String!
-  image: String
-  body: String!
-  caption: String
-  isTrending: Boolean!
-  isFeatured: Boolean!
-  isEditorPicked: Boolean!
-  createdAt: String!
-}
-
-"""user"""
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  image: String!
-}
-
-type Query {
-  posts(getPostInput: PostGetDto!): [Post!]!
-  post(id: ID!): Post!
-  user(id: ID!): User!
-  getMe(id: ID!): User!
-}
-
-input PostGetDto {
-  isTrending: Boolean = false
-  isFeatured: Boolean = false
-  isEditorPicked: Boolean = false
-}
-
-type Mutation {
-  createPost(createPostInput: PostCreateDto!): Post!
-  deletePost(id: ID!): Post!
-  createUser(createUserInput: CreateUserDto!): User!
-  updateUser(updateUserInput: UpdateUserDto!): User!
-  removeUser(id: ID!): User!
-  signup(signupInput: CreateUserDto!): User!
-  login(loginInput: LoginDto!): User!
-  logout(logoutInput: LogoutDto!): String!
-  refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
-}
-
-input PostCreateDto {
-  title: String!
-  authorId: String!
-  postCategory: String!
-  body: String!
-  image: Upload
-  caption: String
-  isTrending: Boolean = false
-  isFeatured: Boolean = false
-  isEditorPicked: Boolean = false
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
 input CreateUserDto {
-  name: String!
   email: String!
-  password: String!
   image: Upload!
-}
-
-input UpdateUserDto {
-  id: String!
-  name: String
-  email: String
-  password: String
-  image: Upload
+  name: String!
+  password: String!
 }
 
 input LoginDto {
@@ -91,7 +18,81 @@ input LogoutDto {
   userId: ID!
 }
 
+type Mutation {
+  createPost(createPostInput: PostCreateDto!): Post!
+  deletePost(postId: ID!): Post!
+  login(loginInput: LoginDto!): User!
+  logout(logoutInput: LogoutDto!): String!
+  refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
+  removeUser(userId: ID!): User!
+  signup(signupInput: CreateUserDto!): User!
+  updateUser(updateUserInput: UpdateUserDto!): User!
+}
+
+"""post"""
+type Post {
+  authorId: String!
+  authorName: String!
+  body: String!
+  caption: String
+  createdAt: String!
+  id: ID!
+  image: String
+  isEditorPicked: Boolean!
+  isFeatured: Boolean!
+  isTrending: Boolean!
+  postCategory: String!
+  title: String!
+}
+
+input PostCreateDto {
+  authorId: String!
+  body: String!
+  caption: String
+  image: Upload
+  isEditorPicked: Boolean = false
+  isFeatured: Boolean = false
+  isTrending: Boolean = false
+  postCategory: String!
+  title: String!
+}
+
+input PostGetDto {
+  isEditorPicked: Boolean = false
+  isFeatured: Boolean = false
+  isTrending: Boolean = false
+}
+
+type Query {
+  findAll: [User!]!
+  findOne(userId: ID!): User!
+  getMe(userId: ID!): User!
+  post(postId: ID!): Post!
+  posts(getPostInput: PostGetDto!): [Post!]!
+}
+
 input RefreshTokensDto {
-  userId: ID!
   refreshToken: String!
+  userId: ID!
+}
+
+input UpdateUserDto {
+  email: String
+  id: String!
+  image: Upload
+  name: String
+  password: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+"""user"""
+type User {
+  email: String!
+  id: ID!
+  image: String!
+  isAdmin: Boolean!
+  name: String!
+  password: String!
 }

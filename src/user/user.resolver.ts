@@ -1,6 +1,7 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GetCurrentUser } from '../common/decorators';
 import { UpdateUserDto } from './dto';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schema/user.schema';
 import { UserService } from './user.service';
 
@@ -8,28 +9,48 @@ import { UserService } from './user.service';
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 
-    @Mutation(() => User)
-    createUser(@Args('createUserInput') dto: CreateUserDto): Promise<User> {
-        return this.userService.create(dto);
-    }
+    @Query(() => [User])
+    findAll(@GetCurrentUser('isAdmin') isAdmin: boolean): Promise<User[]> {
+        if (!isAdmin) {
+            throw new UnauthorizedException('unauthorized');
+        }
 
-    @Query(() => [User], { name: 'user' })
-    findAll(): Promise<User[]> {
         return this.userService.findAll();
     }
 
-    @Query(() => User, { name: 'user' })
-    findOne(@Args('id', { type: () => ID }) id: string): Promise<User> {
-        return this.userService.findOne(id);
+    @Query(() => User)
+    findOne(
+        @GetCurrentUser('isAdmin') isAdmin: boolean,
+        @Args('userId', { type: () => ID }) userId: string
+    ): Promise<User> {
+        if (!isAdmin) {
+            throw new UnauthorizedException('unauthorized');
+        }
+
+        return this.userService.findOne(userId);
     }
 
     @Mutation(() => User)
-    updateUser(@Args('updateUserInput') dto: UpdateUserDto): Promise<User> {
+    updateUser(
+        @GetCurrentUser('isAdmin') isAdmin: boolean,
+        @Args('updateUserInput') dto: UpdateUserDto
+    ): Promise<User> {
+        if (!isAdmin) {
+            throw new UnauthorizedException('unauthorized');
+        }
+
         return this.userService.update(dto);
     }
 
     @Mutation(() => User)
-    removeUser(@Args('id', { type: () => ID }) id: string): Promise<User> {
-        return this.userService.remove(id);
+    removeUser(
+        @GetCurrentUser('isAdmin') isAdmin: boolean,
+        @Args('userId', { type: () => ID }) userId: string
+    ): Promise<User> {
+        if (!isAdmin) {
+            throw new UnauthorizedException('unauthorized');
+        }
+
+        return this.userService.remove(userId);
     }
 }
