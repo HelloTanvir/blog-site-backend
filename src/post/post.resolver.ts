@@ -13,17 +13,17 @@ export class PostResolver {
     }
 
     @Query(() => [Post])
-    posts(@Args({ name: 'getPostInput' }) dto: PostGetDto): Promise<Post[]> {
+    posts(@Args('getPostInput') dto: PostGetDto): Promise<Post[]> {
         return this.postService.findAll(dto);
     }
 
     @Query(() => Post)
-    post(@Args({ name: 'id', type: () => ID }) postId: string): Promise<Post> {
+    post(@Args('postId', { type: () => ID }) postId: string): Promise<Post> {
         return this.postService.findOne(postId);
     }
 
     @Mutation(() => Post)
-    deletePost(@Args({ name: 'id', type: () => ID }) postId: string): Promise<Post> {
+    deletePost(@Args('postId', { type: () => ID }) postId: string): Promise<Post> {
         return this.postService.delete(postId);
     }
 }

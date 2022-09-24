@@ -20,11 +20,11 @@ input LogoutDto {
 
 type Mutation {
   createPost(createPostInput: PostCreateDto!): Post!
-  deletePost(id: ID!): Post!
+  deletePost(postId: ID!): Post!
   login(loginInput: LoginDto!): User!
   logout(logoutInput: LogoutDto!): String!
   refreshTokens(refreshTokensInput: RefreshTokensDto!): User!
-  removeUser(id: ID!): User!
+  removeUser(userId: ID!): User!
   signup(signupInput: CreateUserDto!): User!
   updateUser(updateUserInput: UpdateUserDto!): User!
 }
@@ -64,10 +64,11 @@ input PostGetDto {
 }
 
 type Query {
-  getMe(id: ID!): User!
-  post(id: ID!): Post!
+  findAll: [User!]!
+  findOne(userId: ID!): User!
+  getMe(userId: ID!): User!
+  post(postId: ID!): Post!
   posts(getPostInput: PostGetDto!): [Post!]!
-  user(id: ID!): User!
 }
 
 input RefreshTokensDto {

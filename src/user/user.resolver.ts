@@ -7,14 +7,14 @@ import { UserService } from './user.service';
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 
-    @Query(() => [User], { name: 'user' })
+    @Query(() => [User])
     findAll(): Promise<User[]> {
         return this.userService.findAll();
     }
 
-    @Query(() => User, { name: 'user' })
-    findOne(@Args('id', { type: () => ID }) id: string): Promise<User> {
-        return this.userService.findOne(id);
+    @Query(() => User)
+    findOne(@Args('userId', { type: () => ID }) userId: string): Promise<User> {
+        return this.userService.findOne(userId);
     }
 
     @Mutation(() => User)
@@ -23,7 +23,7 @@ export class UserResolver {
     }
 
     @Mutation(() => User)
-    removeUser(@Args('id', { type: () => ID }) id: string): Promise<User> {
-        return this.userService.remove(id);
+    removeUser(@Args('userId', { type: () => ID }) userId: string): Promise<User> {
+        return this.userService.remove(userId);
     }
 }
