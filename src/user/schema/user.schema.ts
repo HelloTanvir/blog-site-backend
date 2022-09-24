@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
@@ -9,8 +8,12 @@ export type UserDocument = User & Document;
 @ObjectType({ description: 'user' })
 @Schema({ timestamps: true })
 export class User {
-    @Field((type) => ID)
+    @Field(() => ID)
     id: string;
+
+    @Field(() => Boolean)
+    @Prop({ default: false })
+    isAdmin: boolean;
 
     @Field()
     @Prop({

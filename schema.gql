@@ -92,6 +92,7 @@ type User {
   email: String!
   id: ID!
   image: String!
+  isAdmin: Boolean!
   name: String!
   password: String!
 }
