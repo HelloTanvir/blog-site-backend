@@ -6,5 +6,11 @@
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/graphql" }]
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/main.ts",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+    }
+  ]
 }
