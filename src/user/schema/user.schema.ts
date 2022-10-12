@@ -36,7 +36,7 @@ export class User {
     @Prop({ required: [true, 'User image is required'] })
     image: string;
 
-    @Prop({ required: [true, 'User image public id is required'] })
+    @Prop()
     imagePublicId: string;
 
     @Prop({ default: null })
