@@ -9,7 +9,7 @@ export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
     @Field(() => ID)
-    id: string;
+    _id: string;
 
     @Field(() => Boolean)
     @Prop({ default: false })
@@ -36,7 +36,7 @@ export class User {
     @Prop({ required: [true, 'User image is required'] })
     image: string;
 
-    @Prop({ required: [true, 'User image public id is required'] })
+    @Prop()
     imagePublicId: string;
 
     @Prop({ default: null })

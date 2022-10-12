@@ -27,12 +27,12 @@ type Mutation {
 
 """post"""
 type Post {
+  _id: ID!
   authorId: String!
   authorName: String!
   body: String!
   caption: String
   createdAt: String!
-  id: ID!
   image: String
   isEditorPicked: Boolean!
   isFeatured: Boolean!
@@ -84,8 +84,8 @@ scalar Upload
 
 """user"""
 type User {
+  _id: ID!
   email: String!
-  id: ID!
   image: String!
   isAdmin: Boolean!
   name: String!

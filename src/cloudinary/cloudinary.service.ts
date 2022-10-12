@@ -22,7 +22,15 @@ export class CloudinaryService {
                 resolve(result);
             });
 
-            file.createReadStream().pipe(upload);
+            if (file.createReadStream && typeof file.createReadStream === 'function') {
+                file.createReadStream().pipe(upload);
+            } else {
+                resolve({
+                    secure_url:
+                        'https://cdn1.vectorstock.com/i/thumb-large/71/90/blank-avatar-photo-icon-design-vector-30257190.jpg',
+                    public_id: '',
+                } as UploadApiResponse);
+            }
         });
     }
 

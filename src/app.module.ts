@@ -22,6 +22,9 @@ import { MongoExceptionFilter } from './utils';
             driver: ApolloDriver,
             autoSchemaFile: 'schema.gql',
             sortSchema: true,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            uploads: false,
         }),
         PostModule,
         CloudinaryModule,
