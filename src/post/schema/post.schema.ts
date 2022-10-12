@@ -9,7 +9,7 @@ export type PostDocument = Post & Document;
 @Schema({ timestamps: true })
 export class Post {
     @Field((type) => ID)
-    id: string;
+    _id: string;
 
     @Field()
     @Prop({

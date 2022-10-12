@@ -9,7 +9,7 @@ export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
     @Field(() => ID)
-    id: string;
+    _id: string;
 
     @Field(() => Boolean)
     @Prop({ default: false })
