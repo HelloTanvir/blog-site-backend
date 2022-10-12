@@ -36,7 +36,7 @@
     "class-validator": "^0.13.2",
     "cloudinary": "^1.32.0",
     "graphql": "^16.6.0",
-    "graphql-upload": "13.0.0",
+    "graphql-upload": "11.0.0",
     "mongoose": "^6.6.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

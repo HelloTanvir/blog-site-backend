@@ -19,10 +19,13 @@ export class UserService {
             throw new ForbiddenException('user already exists');
         }
 
-        if (dto.image) {
-            const uploaded_file = await this.cloudinaryService.uploadFile(dto.image).catch(() => {
+        const image = await dto.image;
+
+        if (image) {
+            const uploaded_file = await this.cloudinaryService.uploadFile(image).catch(() => {
                 throw new InternalServerErrorException('upload failed');
             });
+
             (dto as any).image = uploaded_file.secure_url;
             (dto as any).imagePublicId = uploaded_file.public_id;
         }

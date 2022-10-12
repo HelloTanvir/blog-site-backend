@@ -23,5 +23,5 @@ export class CreateUserDto {
     @Field((type) => GraphQLUpload)
     @IsOptional()
     @IsNotEmpty()
-    image: FileUpload;
+    image: Promise<FileUpload>;
 }
